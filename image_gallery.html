@@ -1,0 +1,90 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Photos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <style>
+    *,*::after,*::before {
+      box-sizing: border-box;
+    }
+
+    .images {
+      /* min-width: 100%; */
+      /* height: auto; */
+      height: 200px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    #image-holder {
+      max-height: 90vh;
+    }
+  </style>
+</head>
+<body>
+  <div class="card text-center d-none" id="image-message-container">
+    <div class="card-body">
+      <!-- <h5 class="card-title"></h5> -->
+      <p class="card-text" id="message-box"></p>
+      <button class="btn btn-primary" onclick="repeatSoundHandler()">Repeat</button>
+    </div>
+  </div>
+
+  <div id="image-holder">
+    
+  </div>
+
+  <script source="text/javascript">
+    const baseImagePath = 'assets/img'
+    const imageData = [
+      {
+        name: 'img1.jpeg',
+        text: 'A blue rose.'
+      },
+      {
+        name: 'img2.jpeg',
+        text: 'Some birdies'
+      },
+      {
+        name: 'img3.jpg',
+        text: 'Northern/Southern lights'
+      }
+    ]
+
+    const repeatSoundHandler = event => {
+      const msgbox = document.getElementsByClassName('card-text')[0]
+      responsiveVoice.speak(msgbox.textContent)
+    }
+
+    const imgClickHandler = ({target: imageElm}) => {
+      const msg = imageElm.getAttribute('alt')
+      const msgContainer = document.getElementById('image-message-container')
+      msgContainer.classList.remove('d-none')
+      msgContainer.getElementsByClassName('card-text')[0].textContent = msg
+      responsiveVoice.speak(msg)
+    }
+
+    //Image loader
+    const loadImageSet = imageSetContainer => {
+      
+      for(const img of imageData) {
+        const imgNode = document.createElement('img')
+        imgNode.setAttribute('src', `${baseImagePath}/${img.name}`)
+        imgNode.setAttribute('alt', img.text)
+        imgNode.classList.add('images')
+        imgNode.addEventListener('click', imgClickHandler)
+
+        imageSetContainer.appendChild(imgNode)
+      }  
+    }
+
+    loadImageSet(document.getElementById('image-holder'))
+
+  </script>
+</body>
+</html>
