@@ -14,10 +14,6 @@ import math
 from datetime import datetime, date
 
 
-# @mayank408
-# OOP Project
-# 13/10/17
-
 # Mouse Events Class
 
 class Mouse():
